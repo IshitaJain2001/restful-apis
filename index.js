@@ -6,20 +6,25 @@ const express = require('express')
 
 const app = express()
 app.use(cors({
-    origin:"http://localhost:3000"
+    origin:"http://localhost:3001"
 }))
 
 app.get('/api',(req,res)=>{
     res.json(data)
 })
 
-app.get('/api/firstName',(req,res)=>{
+app.get('/api/:id',(req,res)=>{
 
-//   res.send(user.first_name)
+const index= Number(req.params.id)
+const user= data[index]
 
-let firstNames = data.map(user=>user.first_name)
 
-res.json(firstNames)
+if (user) {
+    console.log("user found")
+   res.json(user)
+} else {
+    res.status(404).send('User not found');  
+}
 
 })
 
